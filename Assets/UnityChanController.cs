@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; 
+
 
 public class UnityChanController : MonoBehaviour
 {
@@ -31,6 +31,7 @@ public class UnityChanController : MonoBehaviour
         // Rigidbody2Dのコンポーネントを取得する
         this.rigid2D = GetComponent<Rigidbody2D>();
 
+
     }
 
     // Update is called once per frame
@@ -43,6 +44,11 @@ public class UnityChanController : MonoBehaviour
         // 着地しているかどうかを調べる
         bool isGround = (transform.position.y > this.groundLevel) ? false : true;
         this.animator.SetBool("isGround", isGround);
+
+
+        // ジャンプ状態のときにはボリュームを0にする
+        GetComponent<AudioSource>().volume = (isGround) ? 1 : 0;
+
 
         // 着地状態でクリックされた場合
         if (Input.GetMouseButtonDown(0) && isGround)

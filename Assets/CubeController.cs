@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
-
     // キューブの移動速度
     private float speed = -12;
 
     // 消滅位置
     private float deadLine = -10;
 
+    //音
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        this.audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,16 @@ public class CubeController : MonoBehaviour
         if (transform.position.x < this.deadLine)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.tag == "Cube" || collision.gameObject.tag == "Ground")
+        {
+            // ブロック同士がぶつかった時にサウンドを再生する
+            this.audioSource.Play();
         }
     }
 }
