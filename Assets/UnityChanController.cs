@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class UnityChanController : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class UnityChanController : MonoBehaviour
 
     // ジャンプの速度
     float jumpVelocity = 20;
+
+    // ゲームオーバーになる位置（追加）
+    private float deadLine = -9;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +58,17 @@ public class UnityChanController : MonoBehaviour
             {
                 this.rigid2D.velocity *= this.dump;
             }
+        }
+
+
+        // デッドラインを超えた場合ゲームオーバーにする（追加）
+        if (transform.position.x < this.deadLine)
+        {
+            // UIControllerのGameOver関数を呼び出して画面上に「GameOver」と表示する（追加）
+            GameObject.Find("Canvas").GetComponent<UIController>().GameOver();
+
+            // ユニティちゃんを破棄する（追加）
+            Destroy(gameObject);
         }
     }
 }
